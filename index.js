@@ -2,7 +2,6 @@
 let m = 1, km = 1;
 const ctx = canvas1.getContext("2d");
 const size = canvas1.width;
-let p = {x:size, y:size};
 
 // нарисовать ковер и сохранить картинку
 ctx.fillRect(0, 0, size, size);
@@ -11,14 +10,24 @@ sierpinski(0, 0, size);  //3**6
 const img = new Image();
 img.src = canvas1.toDataURL("image/png");
 
-setInterval(function () {
+//let p = {x:size, y:size};
+let p = {x:0, y:0};
+
+const timerId = setInterval(function () {
     next_scale();
-    show(m);
+    show(3* m);
 }, 20);
 
 // обработчики для кнопок
 buttonPlus.addEventListener('click',  () => km += 1/128 );
 buttonMinus.addEventListener('click', () => km -= 1/128 );
+
+canvas1.addEventListener('keydown', function() {
+    alert(111)
+
+} );
+
+
 
 function next_scale() {
     const m_next = m * km;
