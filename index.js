@@ -1,4 +1,4 @@
-// главная программа
+﻿// главная программа
 let m = 1, km = 1;
 const canvas1 = document.getElementById("canvas1");
 const ctx = canvas1.getContext("2d");
