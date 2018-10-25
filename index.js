@@ -1,5 +1,6 @@
 // главная программа
 let m = 1, km = 1;
+const canvas1 = document.getElementById("canvas1");
 const ctx = canvas1.getContext("2d");
 const size = canvas1.width;
 
@@ -8,28 +9,63 @@ ctx.fillRect(0, 0, size, size);
 ctx.fillStyle = "white";
 sierpinski(0, 0, size);  //3**6
 const img = new Image();
-img.src = canvas1.toDataURL("image/png");
+img.src = canvas1.toDataURL("image/png") ;
 
-//let p = {x:size, y:size};
-let p = {x:0, y:0};
+//let origin = {x: size/10, y: size/10};
+let origin = {x:0, y:0};
 
-const timerId = setInterval(function () {
-    next_scale();
-    show(3* m);
-}, 20);
+let timerId;
 
-// обработчики для кнопок
-buttonPlus.addEventListener('click',  () => km += 1/128 );
-buttonMinus.addEventListener('click', () => km -= 1/128 );
+// обработчики для клавиш
+window.addEventListener('keydown', function(e) {
+    switch (e.keyCode) {
+        case 32:  // space
+            movieOff();
+            movieStep();
+            break;
+        case 37:  // left
+            km -= 0.01;
+            movieOn();
+            break;
+        case 39:  // right
+            km += 0.01;
+            movieOn();
+            break;
+    }
+});
 
-canvas1.addEventListener('keydown', function() {
-    alert(111)
+// обработчик для мыши
+canvas1.addEventListener('mousedown', function(e) {
+    if (e.clientX < size / 2)
+        origin.x = 0;
+    else
+        origin.x = size;
+    if (e.clientY < size / 2)
+        origin.y = 0;
+    else
+        origin.y = size;
+});
 
-} );
+function movieOn() {
+    if (!timerId) {
+        timerId = setInterval(movieStep, 20);
+    }
+}
+
+function movieOff() {
+    if (timerId) {
+        clearInterval(timerId);
+        timerId = null;
+    }
+}
+
+function movieStep() {
+    show(3 * m);
+    nextScale();
+}
 
 
-
-function next_scale() {
+function nextScale() {
     const m_next = m * km;
     if (km > 1)
         m = m_next > 3 ? 1 : m_next;
@@ -39,9 +75,9 @@ function next_scale() {
 
 function show(m) {
     ctx.save();
-    ctx.translate(p.x, p.y)
+    ctx.translate(origin.x, origin.y);
     ctx.scale(m, m);
-    ctx.translate(-p.x, -p.y)
+    ctx.translate(-origin.x, -origin.y);
     ctx.drawImage(img, 0, 0);
     ctx.restore();
 }
