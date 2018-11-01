@@ -1,0 +1,11 @@
+#ltButton, #gtButton
+{
+    font-size: 100px;
+    font-weight: bold;
+    height: 120px;
+    padding: 0px 40px 0px 40px ;
+    margin-right: 40px;
+    color: blue;
+
+
+}

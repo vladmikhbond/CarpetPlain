@@ -5,6 +5,7 @@ const ctx = canvas1.getContext("2d");
 const size = canvas1.width;
 
 // нарисовать ковер и сохранить картинку
+ctx.fillStyle = "blue";
 ctx.fillRect(0, 0, size, size);
 ctx.fillStyle = "white";
 sierpinski(0, 0, size);  //3**6
@@ -16,7 +17,17 @@ let origin = {x:0, y:0};
 
 let timerId;
 
-// обработчики для клавиш
+// обработчики для кнопок
+gtButton.onclick = function() {
+    km += 0.01;
+    if (!km) movieOff(); else movieOn();
+}
+
+ltButton.onclick = function() {
+    km -= 0.01;
+    if (!km) movieOff(); else movieOn();
+}
+
 window.addEventListener('keydown', function(e) {
     switch (e.keyCode) {
         case 32:  // space
